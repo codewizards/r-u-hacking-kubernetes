@@ -31,23 +31,7 @@ minikube dashboard --url
 Now we want an IP to talk to the cluster with
 
 ```bash
-minikube tunnel
-```
-
-This will give an output similar to the following:
-
-```
-Status:
-	machine: minikube
-	pid: 66508
-	route: 10.96.0.0/12 -> YOUR.MINIKUBE.IP.ADDRESS
-	minikube: Running
-	services: []
-    errors:
-		minikube: no errors
-		router: no errors
-		loadbalancer emulator: no errors
-
+minikube ip
 ```
 
 Alter your hosts file with a few new hosts
