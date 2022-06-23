@@ -1,0 +1,17 @@
+image: k8s.gcr.io/hpa-example
+host: helm-example.local
+ports:
+  container: 80
+  service: 80
+scaling:
+  maxSurge: 100%
+  maxUnavailable: 25%
+  minReplicas: 1
+  maxReplicas: 4
+  targetCpuPercentage: 20
+limits:
+  cpu: 0.2
+  memory: 250M
+requests:
+  cpu: 0.1
+  memory: 250M

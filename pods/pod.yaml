@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blue-app
+  labels:
+    app: blue-app # apply this metadata to the pods
+spec:
+  containers:
+    - name: blue-app
+      image: "gcr.io/kuar-demo/kuard-amd64:blue"
+      resources:
+        limits:
+          cpu: 250m
+          memory: 250M
+      ports:
+        - containerPort: 8080

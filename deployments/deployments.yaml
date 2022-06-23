@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+spec:
+  replicas: 2 # schedule 2 copies
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1 # on deployment have a minimum of 1 pod shutting down at a time
+  selector:
+    matchLabels:
+      app: green-app # make any pod that has this label part of the deployment
+  template:
+    metadata:
+      labels:
+        app: green-app # apply this metadata to the pods
+    spec: # what does the pod need to look like
+      containers:
+        - image: gcr.io/kuar-demo/kuard-amd64:green
+          name: green-pod
+          resources:
+            limits:
+              cpu: 250m # limit cpu to 1/4 of a cpu
+              memory: 250M # limit to 250Mb memory
+          volumeMounts:
+            - mountPath: /i_put_my_config_here #path in container
+              name: config # reference to volume below
+            - mountPath: /i_put_my_secrets_here
+              name: secrets
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: config # local name for the volume
+          configMap: # its a config map
+            name: green-settings # which one?
+        - name: secrets
+          secret:
+            secretName: green-secrets

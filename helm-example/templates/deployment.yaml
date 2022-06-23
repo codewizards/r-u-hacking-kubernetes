@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.scaling.minReplicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.scaling.maxUnavailable }}
+      maxSurge: {{ .Values.scaling.maxSurge }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-pod
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-pod
+    spec:
+      containers:
+        - image: {{ .Values.image }}
+          name: {{ .Release.Name }}-pod
+          resources:
+            limits:
+              cpu: {{ .Values.limits.cpu }}
+              memory: {{ .Values.limits.memory }}
+            requests:
+              cpu: {{ .Values.requests.cpu }}
+              memory: {{ .Values.requests.memory }}
+          ports:
+            - containerPort: {{ .Values.ports.container }}
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: {{ .Values.ports.container }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
