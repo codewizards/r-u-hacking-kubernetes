@@ -1,5 +1,7 @@
 # CodeWizards Kubernetes demo
 
+This is a very top level introduction to the most basic Kubernetes resources. You should be able to deploy a workload to a cluster with the information given here. There is so much more to kubernetes than what is contained here, but have fun getting your feet wet :)
+
 ## Requirements
 
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) (local kubernetes cluster)
@@ -20,6 +22,34 @@ minikube addons enable metrics-server
 minikube addons enable dashboard
 ```
 
+## Basic commands
+
+`kubectl api-resources` shows you all the resource types the cluster knows about - there are _many_ in here, and more can be added but for the porpose of this example you only need worry about:
+
+- pods
+- services (svc)
+- deployments (deploy)
+- ingresses (ing)
+- configmaps (cm)
+- secrets
+- horizontalpodautoscalers (hpa)
+
+`kubectl get RESOURCE_TYPE` is the "listing" operator on various resources.
+
+`kubectl describe RESOURCE_TYPE RESOURCE_NAME` gets detailed information on the desired resource
+
+`kubectl apply -f MANIFEST_FILE` will create the resources in the given file
+
+`kubectl delete -f MANIFEST_FILE` will delete the resources in the given file
+
+Examples
+
+`kubectl get pods` will list the pods in the current namespace
+
+`kubectl describe pod blue-app` will give you info on the `blue-app` pod
+
+## Adding resources to Kubernetes via manifests
+
 There is an official web dashboard to get a view on what is going on, however it is not recommended for production. If you aren't very comfortable with the cli then it's a good jumping off point.
 
 To view the dashboard
@@ -39,7 +69,6 @@ Alter your hosts file with a few new hosts
 ```
 YOUR.MINIKUBE.IP.ADDRESS 	green.local
 YOUR.MINIKUBE.IP.ADDRESS 	blue.local
-YOUR.MINIKUBE.IP.ADDRESS	wordpress.local
 ```
 
 You can now apply each manifest file with the following syntax (except helm!)
@@ -123,3 +152,16 @@ echo "$(minikube ip)	wordpress.local" | sudo tee -a /etc/hosts > /dev/null
 ```
 
 In windows: Alter the hosts file at `c:\windows\system32\drivers\etc\hosts`
+
+## Further reading
+
+- Service meshes eg [linkerd](https://linkerd.io/2.11/overview/)/[Istio](https://istio.io/latest/about/service-mesh/) - very handy for [canary releases](https://blog.getambassador.io/cloud-native-patterns-canary-release-1cb8f82d371a)
+- [Nginx Ingress](https://kubernetes.github.io/ingress-nginx/) - youll probably have to deal with nginx at some point!
+- [Prometheus](https://prometheus.io/) - metric aggregation
+- [DataDog](https://www.datadoghq.com/) - log collection
+- [Grafana](https://grafana.com/) - incredible dashboarding tool
+- [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/) - versatile auth barrier that plugs into most federated identity providers allowing you to secure dashboards to authenticated authorised users (eg the grafana ui!)
+- [Tailscale](https://tailscale.com/) - wireguard based vpn to secure cluster access
+- [Operators](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) - how to extend Kubernetes
+- [Pager Duty](https://www.pagerduty.com/index/) - alerting tool to tell you when things have gone wrong
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) - have your cluster look at a git repository to make its updates

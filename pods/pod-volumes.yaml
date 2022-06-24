@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blue-app
+  labels:
+    app: blue-app # apply this metadata to the containers
+spec:
+  containers:
+    - name: blue-app
+      image: "gcr.io/kuar-demo/kuard-amd64:blue"
+      resources:
+        limits:
+          cpu: 250m
+          memory: 250M
+      volumeMounts:
+        - mountPath: /i_put_my_config_here #path in container
+          name: config # reference to volume below
+        - mountPath: /i_put_my_secrets_here
+          name: secrets
+      ports:
+        - containerPort: 8080
+  volumes:
+    - name: config # local name for the volume
+      configMap: # its a config map
+        name: green-settings # which config map to refer to
+    - name: secrets
+      secret:
+        secretName: green-secrets

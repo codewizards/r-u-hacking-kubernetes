@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: blue-app
   labels:
-    app: blue-app # apply this metadata to the pods
+    app: blue-app # apply this metadata to the containers
 spec:
   containers:
     - name: blue-app
