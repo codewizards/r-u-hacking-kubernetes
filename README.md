@@ -75,6 +75,7 @@ In windows: Alter the hosts file at `c:\windows\system32\drivers\etc\hosts`
 ```
 YOUR.MINIKUBE.IP.ADDRESS 	green.local
 YOUR.MINIKUBE.IP.ADDRESS 	blue.local
+YOUR.MINIKUBE.IP.ADDRESS 	example1.local
 ```
 
 You can now apply each manifest file with the following syntax (except the files in the helm directory!)
@@ -89,7 +90,7 @@ You can delete resources in the same way
 kubectl delete -f PATH_TO_FILE
 ```
 
-Install a copy of the helm template with:
+Install a copy of the included helm template with:
 
 ```bash
 helm install NAME_OF_APP ./helm-example
@@ -104,10 +105,16 @@ YOUR.MINIKUBE.IP.ADDRESS 	NAME_OF_APP.local
 Run a load test!
 
 ```bash
-kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://NAME_OF_APP.local; done"
+kubectl run -i --tty \
+	load-generator \
+	--rm --image=busybox:1.28 \
+	--restart=Never -- /bin/sh -c \
+	"while sleep 0.01; do wget -q -O- http://NAME_OF_APP-service; done"
 ```
 
-Watch with the CLI or the dashboard
+Note that the wget command is using address of the _service_, as the service is our service-discovery based routing endpoint.
+
+Watch it scale with the CLI or by watching the pod tab in the dashboard
 
 ```bash
 kubectl get hpa NAME_OF_APP-scaler --watch
@@ -125,10 +132,19 @@ minikube update-context wordpress
 minikube addons enable ingress
 ```
 
+Note: as this is a _new_ cluster, the previous dashboard will not show you the resources you are about to deploy. To access the new web dashboard, run the `minikube dashboard --url` command again.
+
 Install wordpress:
+
+First tell helm that you want to include charts from the bitnami repository
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+
+Now tell helm to install it! Note some of the parameters here, have a go changing the hostname if you want to put it on a different host!
+
+```bash
 helm install my-site bitnami/wordpress \
 	--set service.type=ClusterIP \
 	--set ingress.enabled=true \
