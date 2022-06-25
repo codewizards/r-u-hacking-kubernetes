@@ -24,7 +24,7 @@ minikube addons enable dashboard
 
 ## Basic commands
 
-`kubectl api-resources` shows you all the resource types the cluster knows about - there are _many_ in here, and more can be added but for the porpose of this example you only need worry about:
+`kubectl api-resources` shows you all the resource types the cluster knows about - there are _many_ in here, and more can be added but for the purpose of this example you only need worry about:
 
 - pods
 - services (svc)
@@ -65,6 +65,9 @@ minikube ip
 ```
 
 Alter your hosts file with a few new hosts
+
+OSX/Linux: `/etc/hosts`
+In windows: Alter the hosts file at `c:\windows\system32\drivers\etc\hosts`
 
 ```
 YOUR.MINIKUBE.IP.ADDRESS 	green.local
