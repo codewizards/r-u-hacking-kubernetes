@@ -48,7 +48,7 @@ Examples
 
 `kubectl describe pod blue-app` will give you info on the `blue-app` pod
 
-## Adding resources to Kubernetes via manifests
+## Getting to grips with Kubernetes
 
 There is an official web dashboard to get a view on what is going on, however it is not recommended for production. If you aren't very comfortable with the cli then it's a good jumping off point.
 
@@ -57,6 +57,8 @@ To view the dashboard
 ```bash
 minikube dashboard --url
 ```
+
+This will give you an in-terminal link you can click to go to the Web UI
 
 Now we want an IP to talk to the cluster with
 
@@ -74,7 +76,7 @@ YOUR.MINIKUBE.IP.ADDRESS 	green.local
 YOUR.MINIKUBE.IP.ADDRESS 	blue.local
 ```
 
-You can now apply each manifest file with the following syntax (except helm!)
+You can now apply each manifest file with the following syntax (except the files in the helm directory!)
 
 ```bash
 kubectl apply -f PATH_TO_FILE
