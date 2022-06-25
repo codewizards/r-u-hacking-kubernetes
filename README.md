@@ -4,6 +4,7 @@ This is a very top level introduction to the most basic Kubernetes resources. Yo
 
 ## Requirements
 
+- A POSIX compliant shell, OSX and Linux have this out the box (iTerm, etc), and Windows users can use [Git Bash](https://git-scm.com/downloads)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) (local kubernetes cluster)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) (command line interface)
 - [helm](https://helm.sh/docs/intro/install/) (kubernetes template/package manager)
