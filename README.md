@@ -90,7 +90,21 @@ You can delete resources in the same way
 kubectl delete -f PATH_TO_FILE
 ```
 
-Install a copy of the included helm template with:
+Try applying these files, and alter them if you want to see what happens
+
+- configmap/configmap.yaml
+- deployments/deployments.yaml
+- secrets/secrets.yaml
+- ingress/ingress.yaml
+- pods/pod-volumes.yaml
+
+Try deploying them in a random order and see what happens, what if you create a pod that references a volume that doesn't exist?
+
+You can use the `kubectl describe RESOURCE` command to try debug what went wrong.
+
+Have a look at the results at `http://green.local` and `http://blue.local`!
+
+You can install a copy of the included helm template with:
 
 ```bash
 helm install NAME_OF_APP ./helm-example
